@@ -1,0 +1,1 @@
+﻿import { io, Socket } from 'socket.io-client';\nexport function connectSocket(url = import.meta.env.VITE_WS_URL || 'ws://localhost:3000') {\n  const socket: Socket = io(url, { transports: ['websocket'] });\n  return socket;\n}\n

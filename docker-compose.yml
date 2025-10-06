@@ -1,0 +1,19 @@
+﻿version: "3.8"
+services:
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  n8n:
+    image: n8nio/n8n:1.106.3
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+    volumes:
+      - n8n_data:/home/node/.n8n
+volumes:
+  mongo_data:
+  n8n_data:

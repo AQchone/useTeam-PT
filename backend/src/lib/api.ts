@@ -1,0 +1,1 @@
+﻿export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';\nexport async function api<T>(path: string, options?: RequestInit): Promise<T> {\n  const res = await fetch(${API_URL}, {\n    headers: { 'Content-Type': 'application/json' },\n    ...options,\n  });\n  if (!res.ok) throw new Error('API error');\n  return res.json();\n}\n

@@ -1,0 +1,17 @@
+﻿{
+  "name": "Kanban Export",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [260, 300],
+      "webhookId": "kanban-export",
+      "path": "kanban-export",
+      "httpMethod": "POST"
+    }
+  ],
+  "connections": {}
+}
