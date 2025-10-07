@@ -27,6 +27,7 @@
     "@nestjs/platform-socket.io": "^11.1.6",
     "@nestjs/websockets": "^11.1.6",
     "cors": "^2.8.5",
+    "mongodb-memory-server": "^10.2.3",
     "mongoose": "^8.19.1",
     "node-fetch": "^2.7.0",
     "reflect-metadata": "^0.2.2",

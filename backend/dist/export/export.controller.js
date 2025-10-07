@@ -19,7 +19,7 @@ let ExportController = class ExportController {
     async triggerExport() {
         const webhookUrl = process.env.N8N_WEBHOOK_URL ?? '';
         if (!webhookUrl)
-            return { ok: false, error: 'N8N_WEBHOOK_URL not set' };
+            return { ok: false, error: 'N8N_WEBHOOK_URL no está configurada' };
         const res = await (0, node_fetch_1.default)(webhookUrl, { method: 'POST' });
         return { ok: res.ok };
     }

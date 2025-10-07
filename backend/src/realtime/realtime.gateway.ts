@@ -7,7 +7,7 @@ export class RealtimeGateway implements OnGatewayConnection {
   server: Server;
 
   handleConnection() {
-    // no-op; could add auth in future
+    // Sin operación; se podría añadir autenticación en el futuro
   }
 
   emitTaskCreated(task: any) {

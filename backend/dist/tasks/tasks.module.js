@@ -12,6 +12,7 @@ const mongoose_1 = require("@nestjs/mongoose");
 const tasks_service_1 = require("./tasks.service");
 const tasks_controller_1 = require("./tasks.controller");
 const tasks_schema_1 = require("./tasks.schema");
+const realtime_module_1 = require("../realtime/realtime.module");
 let TasksModule = class TasksModule {
 };
 exports.TasksModule = TasksModule;
@@ -19,6 +20,7 @@ exports.TasksModule = TasksModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: tasks_schema_1.Task.name, schema: tasks_schema_1.TaskSchema }]),
+            realtime_module_1.RealtimeModule,
         ],
         providers: [tasks_service_1.TasksService],
         controllers: [tasks_controller_1.TasksController]

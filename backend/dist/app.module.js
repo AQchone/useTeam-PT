@@ -14,15 +14,30 @@ const app_service_1 = require("./app.service");
 const tasks_module_1 = require("./tasks/tasks.module");
 const export_module_1 = require("./export/export.module");
 const realtime_gateway_1 = require("./realtime/realtime.gateway");
+const realtime_module_1 = require("./realtime/realtime.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot(process.env.MONGODB_URI ?? 'mongodb://localhost:27017/kanban-board'),
+            mongoose_1.MongooseModule.forRootAsync({
+                useFactory: async () => {
+                    const explicitUri = process.env.MONGODB_URI;
+                    if (explicitUri) {
+                        return { uri: explicitUri };
+                    }
+                    if (process.env.USE_IN_MEMORY_DB === 'true') {
+                        const { MongoMemoryServer } = await import('mongodb-memory-server');
+                        const mem = await MongoMemoryServer.create();
+                        return { uri: mem.getUri() };
+                    }
+                    return { uri: 'mongodb://localhost:27017/kanban-board' };
+                },
+            }),
             tasks_module_1.TasksModule,
             export_module_1.ExportModule,
+            realtime_module_1.RealtimeModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, realtime_gateway_1.RealtimeGateway],
