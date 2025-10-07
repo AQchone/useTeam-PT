@@ -23,7 +23,14 @@
 
 ## Descripción
 
-[Nest](https://github.com/nestjs/nest) framework - Repositorio inicial con TypeScript.
+API NestJS para un tablero Kanban en tiempo real con MongoDB y Socket.io.
+
+### Funcionalidades
+
+- CRUD de tareas (`/api/tasks`).
+- WebSocket Gateway para eventos `task:created|updated|deleted`.
+- Exportar backlog (`POST /api/export/backlog`) vía webhook N8N.
+- Validación con DTOs y `ValidationPipe` global.
 
 ## Configuración del proyecto
 
@@ -57,42 +64,17 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Despliegue
+## Variables de entorno
 
-Cuando estés listo para desplegar tu aplicación NestJS en producción, hay pasos clave que puedes seguir para asegurar que funcione de la forma más eficiente posible. Consulta la [documentación de despliegue](https://docs.nestjs.com/deployment) para más información.
+- `PORT` (por defecto 3000)
+- `MONGODB_URI`
+- `USE_IN_MEMORY_DB` (true/false)
+- `N8N_WEBHOOK_URL` (para exportar backlog)
 
-Si buscas una plataforma en la nube para desplegar tu aplicación NestJS, revisa [Mau](https://mau.nestjs.com), nuestra plataforma oficial para desplegar aplicaciones NestJS en AWS. Mau hace que el despliegue sea simple y rápido, requiriendo solo unos pocos pasos:
+## Endpoints
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-Con Mau, puedes desplegar tu aplicación en pocos clics, permitiéndote enfocarte en construir funcionalidades en lugar de gestionar infraestructura.
-
-## Recursos
-
-Algunos recursos que pueden ser útiles al trabajar con NestJS:
-
-- Visita la [documentación de NestJS](https://docs.nestjs.com) para aprender más sobre el framework.
-- Para preguntas y soporte, por favor visita nuestro [canal de Discord](https://discord.gg/G7Qnnhy).
-- Para profundizar y obtener experiencia práctica, revisa nuestros [cursos oficiales](https://courses.nestjs.com/).
-- Despliega tu aplicación en AWS con ayuda de [NestJS Mau](https://mau.nestjs.com) en pocos clics.
-- Visualiza el grafo de tu aplicación e interactúa con la aplicación NestJS en tiempo real usando [NestJS Devtools](https://devtools.nestjs.com).
-- ¿Necesitas ayuda con tu proyecto (part-time o full-time)? Revisa nuestro [soporte empresarial](https://enterprise.nestjs.com).
-- Para mantenerte al día y recibir actualizaciones, síguenos en [X](https://x.com/nestframework) y [LinkedIn](https://linkedin.com/company/nestjs).
-- ¿Buscas trabajo o tienes una vacante? Revisa nuestro [tablero de empleos](https://jobs.nestjs.com).
-
-## Soporte
-
-Nest es un proyecto open source con licencia MIT. Puede crecer gracias a los patrocinadores y al apoyo de la comunidad. Si te gustaría unirte, por favor [lee más aquí](https://docs.nestjs.com/support).
-
-## Mantente en contacto
-
-- Autor - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Sitio web - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## Licencia
-
-Nest está bajo [licencia MIT](https://github.com/nestjs/nest/blob/master/LICENSE).
+- `GET /api/tasks`
+- `POST /api/tasks`
+- `PATCH /api/tasks/:id`
+- `DELETE /api/tasks/:id`
+- `POST /api/export/backlog`

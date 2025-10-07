@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { CreateTaskDto, IdParamDto, UpdateTaskDto } from './dto';
 import { RealtimeGateway } from '../realtime/realtime.gateway';
 import { TasksService } from './tasks.service';
 
@@ -15,7 +16,7 @@ export class TasksController {
   }
 
   @Post()
-  create(@Body() body: { title: string; description?: string; column?: 'todo' | 'doing' | 'done' }) {
+  create(@Body() body: CreateTaskDto) {
     return this.tasksService.create({
       title: body.title,
       description: body.description ?? '',
@@ -28,8 +29,8 @@ export class TasksController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
-    @Body() body: Partial<{ title: string; description: string; column: 'todo' | 'doing' | 'done' }>,
+    @Param() { id }: IdParamDto,
+    @Body() body: UpdateTaskDto,
   ) {
     return this.tasksService.update(id, body).then((task) => {
       this.realtime.emitTaskUpdated(task);
@@ -38,7 +39,7 @@ export class TasksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param() { id }: IdParamDto) {
     return this.tasksService.remove(id).then(() => {
       this.realtime.emitTaskDeleted(id);
       return { deleted: true };

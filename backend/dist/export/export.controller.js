@@ -18,10 +18,16 @@ const node_fetch_1 = __importDefault(require("node-fetch"));
 let ExportController = class ExportController {
     async triggerExport() {
         const webhookUrl = process.env.N8N_WEBHOOK_URL ?? '';
-        if (!webhookUrl)
+        if (!webhookUrl) {
             return { ok: false, error: 'N8N_WEBHOOK_URL no está configurada' };
-        const res = await (0, node_fetch_1.default)(webhookUrl, { method: 'POST' });
-        return { ok: res.ok };
+        }
+        try {
+            const res = await (0, node_fetch_1.default)(webhookUrl, { method: 'POST' });
+            return { ok: res.ok };
+        }
+        catch (e) {
+            return { ok: false, error: 'No se pudo contactar el webhook de N8N' };
+        }
     }
 };
 exports.ExportController = ExportController;

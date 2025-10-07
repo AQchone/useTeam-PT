@@ -1,5 +1,6 @@
 import { OnGatewayConnection, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import type { Task } from '../tasks/tasks.schema';
 
 @WebSocketGateway({ cors: { origin: '*' } })
 export class RealtimeGateway implements OnGatewayConnection {
@@ -10,11 +11,11 @@ export class RealtimeGateway implements OnGatewayConnection {
     // Sin operación; se podría añadir autenticación en el futuro
   }
 
-  emitTaskCreated(task: any) {
+  emitTaskCreated(task: Task) {
     this.server.emit('task:created', task);
   }
 
-  emitTaskUpdated(task: any) {
+  emitTaskUpdated(task: Task) {
     this.server.emit('task:updated', task);
   }
 

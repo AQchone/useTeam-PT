@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TasksController = void 0;
 const common_1 = require("@nestjs/common");
+const dto_1 = require("./dto");
 const realtime_gateway_1 = require("../realtime/realtime.gateway");
 const tasks_service_1 = require("./tasks.service");
 let TasksController = class TasksController {
@@ -36,13 +37,13 @@ let TasksController = class TasksController {
             return task;
         });
     }
-    update(id, body) {
+    update({ id }, body) {
         return this.tasksService.update(id, body).then((task) => {
             this.realtime.emitTaskUpdated(task);
             return task;
         });
     }
-    remove(id) {
+    remove({ id }) {
         return this.tasksService.remove(id).then(() => {
             this.realtime.emitTaskDeleted(id);
             return { deleted: true };
@@ -60,22 +61,23 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [dto_1.CreateTaskDto]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "create", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [dto_1.IdParamDto,
+        dto_1.UpdateTaskDto]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [dto_1.IdParamDto]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "remove", null);
 exports.TasksController = TasksController = __decorate([

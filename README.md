@@ -190,3 +190,59 @@ Durante el desarrollo de esta prueba se evaluarán:
 ---
 
 ¡Buena suerte! :rocket:
+
+---
+
+## Funcionalidades implementadas
+
+- Tablero Kanban con 3 columnas (`Por hacer`, `En progreso`, `Hecho`).
+- Crear, mover (drag & drop) y eliminar tareas.
+- Sincronización en tiempo real vía Socket.io (NestJS Gateway).
+- Dedupe de eventos para evitar duplicados.
+- Exportar Backlog: botón en frontend que llama `/api/export/backlog` (requiere `N8N_WEBHOOK_URL`).
+- Validación de entrada en backend con DTOs y ValidationPipe global.
+- Estilos en CSS (sin inline styles), componentes React memoizados.
+
+## Cómo ejecutar
+
+1) Backend (Mongo en memoria por defecto)
+
+```powershell
+$env:USE_IN_MEMORY_DB='true'
+# opcional para exportar backlog (si tienes n8n corriendo)
+# $env:N8N_WEBHOOK_URL='http://localhost:5678/webhook/kanban-export'
+cd backend
+npm install
+npm run build
+npm run start:dev
+```
+
+2) Frontend
+
+```powershell
+cd frontend
+npm install
+npm run dev -- --host
+```
+
+3) Entrar a `http://localhost:5173`
+
+## Variables de entorno
+
+- Backend
+  - `PORT` (por defecto 3000)
+  - `MONGODB_URI` (si no se define y `USE_IN_MEMORY_DB!='true'`, usa `mongodb://localhost:27017/kanban-board`)
+  - `USE_IN_MEMORY_DB` (`true` para usar Mongo en memoria)
+  - `N8N_WEBHOOK_URL` (URL del webhook para exportar backlog)
+
+- Frontend (Vite)
+  - `VITE_API_URL` (por defecto `http://localhost:3000/api`)
+  - `VITE_WS_URL` (por defecto `http://localhost:3000`)
+
+## Endpoints principales
+
+- `GET /api/tasks` – listar tareas
+- `POST /api/tasks` – crear tarea `{ title, description?, column? }`
+- `PATCH /api/tasks/:id` – actualizar `{ title?, description?, column? }`
+- `DELETE /api/tasks/:id` – eliminar
+- `POST /api/export/backlog` – dispara exportación en n8n

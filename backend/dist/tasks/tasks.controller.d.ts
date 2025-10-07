@@ -1,3 +1,4 @@
+import { CreateTaskDto, IdParamDto, UpdateTaskDto } from './dto';
 import { RealtimeGateway } from '../realtime/realtime.gateway';
 import { TasksService } from './tasks.service';
 export declare class TasksController {
@@ -11,11 +12,7 @@ export declare class TasksController {
     }> & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>)[]>;
-    create(body: {
-        title: string;
-        description?: string;
-        column?: 'todo' | 'doing' | 'done';
-    }): Promise<import("mongoose").Document<unknown, {}, import("./tasks.schema").Task, {}, {}> & import("./tasks.schema").Task & {
+    create(body: CreateTaskDto): Promise<import("mongoose").Document<unknown, {}, import("./tasks.schema").Task, {}, {}> & import("./tasks.schema").Task & {
         _id: import("mongoose").Types.ObjectId;
     } & {
         __v: number;
@@ -24,18 +21,14 @@ export declare class TasksController {
     }> & {
         __v: number;
     }>;
-    update(id: string, body: Partial<{
-        title: string;
-        description: string;
-        column: 'todo' | 'doing' | 'done';
-    }>): Promise<import("mongoose").FlattenMaps<import("mongoose").Document<unknown, {}, import("./tasks.schema").Task, {}, {}> & import("./tasks.schema").Task & {
+    update({ id }: IdParamDto, body: UpdateTaskDto): Promise<import("mongoose").FlattenMaps<import("mongoose").Document<unknown, {}, import("./tasks.schema").Task, {}, {}> & import("./tasks.schema").Task & {
         _id: import("mongoose").Types.ObjectId;
     } & {
         __v: number;
     }> & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
-    remove(id: string): Promise<{
+    remove({ id }: IdParamDto): Promise<{
         deleted: boolean;
     }>;
 }
